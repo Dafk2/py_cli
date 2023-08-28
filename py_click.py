@@ -33,7 +33,7 @@ def newUser (ctx, name, lastname):
 
 @cli.command()
 @click.argument('id', required=True, type=int)
-def getUsers(id):
+def getUser(id):
   users = json_manager.redJson()
   user = next((user for user in users if user['id'] == id), None)
 
@@ -54,7 +54,7 @@ def users ():
 @cli.command()
 @click.argument('id', required=True, type=int)
 def deleteUser (id):
-  users = json_manager.read_json()
+  users = json_manager.redJson()
   user = next((user for user in users if user['id'] == id), None)
 
   if user is None:
@@ -62,7 +62,7 @@ def deleteUser (id):
 
   else:
     users.remove(user)
-    json_manager.write_json(users)
+    json_manager.writeJson(users)
     print(f'User with id ({id}) delete successfully')
 
 @cli.command() 
@@ -81,8 +81,8 @@ def userUpdate (id, name, lastname):
         user['lastname'] = lastname
       break  
 
-  json_manager.writeJson()
-  print(f'User with id ({id}) delete successfully')
+  json_manager.writeJson(users)
+  print(f'User with id ({id}) update successfully')
   
 if __name__ == '__main__':
   cli()
